@@ -3,9 +3,11 @@ import axios from 'axios';
 import ApolloClient from 'apollo-client';
 import {ApolloProvider} from 'react-apollo';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Grommet } from 'grommet';
 
 import GitHubLogin from './components/github-login';
 import Home from './components/home';
+import ApplicationLayout from './components/application-layout/ApplicationLayout';
 import {token, isAuth, API_URL, getLink} from './auth';
 import './App.css';
 
@@ -45,15 +47,15 @@ class App extends Component<any, any> {
 
   render() {
     return (
-      <div className="App">
+      <Grommet>
       {
-        !this.state.isSignedIn
+        this.state.isSignedIn
           ? 
           <ApolloProvider client={new ApolloClient({
             link: getLink(this.state.token),
             cache: new InMemoryCache()
           })}>
-          <Home />
+          <ApplicationLayout><Home /></ApplicationLayout>
         </ApolloProvider>
           :
         <GitHubLogin
@@ -64,7 +66,7 @@ class App extends Component<any, any> {
           scope="repo"
         />
       }
-      </div>
+      </Grommet>
     );
   }
 }

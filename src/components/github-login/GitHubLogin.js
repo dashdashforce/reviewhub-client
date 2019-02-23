@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'grommet';
+import {Github} from 'grommet-icons';
 
 import PopupWindow from './PopupWindow';
 import { toQuery } from './utils';
@@ -69,7 +71,7 @@ class GitHubLogin extends Component {
       attrs.className = className;
     }
 
-    return <button {...attrs}>{ children || buttonText }</button>;
+    return <Button icon={<Github/>} {...attrs} label={ children || buttonText }/>;
   }
 }
 
