@@ -3,12 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "@types/jest": "24.0.6",
     "@types/node": "11.9.5",
+    "@types/reach__router": "^1.2.3",
     "@types/react": "16.8.4",
     "@types/react-dom": "16.8.2",
+    "apollo-boost": "^0.1.28",
+    "apollo-client": "^2.4.13",
+    "apollo-link-context": "^1.0.14",
+    "axios": "^0.18.0",
+    "graphql": "^14.1.1",
     "react": "^16.8.3",
+    "react-apollo": "^2.4.1",
     "react-dom": "^16.8.3",
+    "react-github-login": "^1.0.3",
     "react-scripts": "2.1.5",
     "typescript": "3.3.3333"
   },
@@ -26,5 +35,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^1.16.4"
+  }
 }
