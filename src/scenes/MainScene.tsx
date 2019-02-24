@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ApolloProvider} from 'react-apollo';
-import {RouteComponentProps} from '@reach/router';
+import {RouteComponentProps, Redirect} from '@reach/router';
 
 export interface MainScreneProps extends RouteComponentProps {
   client: any;
@@ -8,6 +8,9 @@ export interface MainScreneProps extends RouteComponentProps {
 }
 
 const MainScrene: React.SFC<MainScreneProps> = ({client, children}) => {
+  if (!client) {
+    return <Redirect to="/login" noThrow />;
+  }
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
