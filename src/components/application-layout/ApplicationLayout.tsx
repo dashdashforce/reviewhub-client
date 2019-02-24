@@ -1,44 +1,26 @@
-import React from 'react';
-import { Box, Grommet } from 'grommet';
+import React from "react";
+import { Grommet, Box } from "grommet";
+import Header from "../header/Header";
 
 const theme = {
-    global: {
-     colors: {
-       brand: '#228BE6',
-     },
-      font: {
-        family: 'Roboto',
-        size: '18px',
-        height: '20px',
-      },
-    },
-  };
-
-const Header = (props: any) => (
-    <Box
-      tag='header'
-      direction='row'
-      align='center'
-      justify='between'
-      background='brand'
-      pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-      elevation='medium'
-      style={{ zIndex: '1' }}
-      {...props}
-    />
-);
+  global: {
+    colors: {
+      brand: "#228BE6"
+    }
+  }
+};
 
 export interface ApplicationLayoutProps {
-    children: React.ReactNode;
- }
-  
-  const ApplicationLayout: React.SFC<ApplicationLayoutProps> = ({children}) => {
-    return (
+  children: React.ReactNode;
+}
+
+const ApplicationLayout: React.SFC<ApplicationLayoutProps> = ({ children }) => {
+  return (
     <Grommet theme={theme}>
-          <Header>Header</Header>
-          {children}
+      <Header />
+      {children}
     </Grommet>
-    );
-  };
-  
-  export default ApplicationLayout;
+  );
+};
+
+export default ApplicationLayout;
