@@ -2,7 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 
 import GitHubLogin from '../components/github-login';
-import {RouteComponentProps} from '@reach/router';
+import {RouteComponentProps, Redirect} from '@reach/router';
 
 import {token, isAuth, API_HOST, getLink as getAuthLink} from '../auth';
 
@@ -28,7 +28,9 @@ interface GithubResponse {
   code: string;
 }
 
-export interface LoginSceneProps {}
+export interface LoginSceneProps {
+  isAuthorized: boolean;
+}
 
 export interface LoginSceneProps extends RouteComponentProps {
   onLogin: (data: {token: string}) => void;

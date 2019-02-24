@@ -8,6 +8,7 @@ export interface MainScreneProps extends RouteComponentProps {
 }
 
 const MainScrene: React.SFC<MainScreneProps> = ({client, children}) => {
+  console.log(client);
   if (!client) {
     return <Redirect to="/login" noThrow />;
   }

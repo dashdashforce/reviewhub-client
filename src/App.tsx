@@ -14,46 +14,76 @@ import ApplicationLayout from './components/application-layout/ApplicationLayout
 
 class App extends Component<any, any> {
   state = {
-    isSignedIn: false,
+    isLoaded: false,
   };
 
   client: any = null;
 
-  handleOnLoginFailed(response: any) {
-    console.log(response);
+  render() {
+    const {isLoaded} = this.state;
+    return (
+      <ApplicationLayout>
+        {isLoaded ? (
+          <Router>
+            <LoginScene
+              path="/login"
+              isAuthorized={this.client}
+              onLogin={this.handleLogin}
+            />
+            <MainScrene path="/" client={this.client}>
+              <Redirect from="/" to="/dashboard" noThrow />
+              <DashboardScene path="dashboard" onLogout={this.handleLogout} />
+            </MainScrene>
+          </Router>
+        ) : (
+          'Loading...'
+        )}
+      </ApplicationLayout>
+    );
   }
 
-  handleLogin = ({token}: {token: string}) => {
-    localStorage.setItem('token', token);
+  componentDidMount() {
+    const token = localStorage.getItem('token');
 
+    if (!token) {
+      this.loaded();
+      return;
+    }
+
+    this.initApolloClient(token);
+    this.loaded();
+    navigate('/dashboard');
+  }
+
+  loaded() {
+    this.setState({
+      isLoaded: true,
+    });
+  }
+
+  initApolloClient(token: string) {
     this.client = new ApolloClient({
       link: getAuthLink(token),
       cache: new InMemoryCache(),
     });
+  }
 
-    this.setState(
-      {
-        isSignedIn: true,
-      },
-      () => {
-        navigate('/dashboard');
-      },
-    );
+  handleLogout = () => {
+    localStorage.removeItem('token');
+    this.client = null;
+    navigate('/login');
   };
 
-  render() {
-    return (
-      <ApplicationLayout>
-        <Router>
-          <LoginScene path="/login" onLogin={this.handleLogin} />
-          <MainScrene path="/" client={this.client}>
-            <Redirect from="/" to="/dashboard" noThrow />
-            <DashboardScene path="dashboard" />
-          </MainScrene>
-        </Router>
-      </ApplicationLayout>
-    );
-  }
+  handleOnLoginFailed = (response: any) => {
+    console.log(response);
+  };
+
+  handleLogin = ({token}: {token: string}) => {
+    localStorage.setItem('token', token);
+    this.initApolloClient(token);
+    this.forceUpdate();
+    navigate('/dashboard');
+  };
 }
 
 export default App;
